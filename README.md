@@ -4,7 +4,7 @@ Noops
 #### PLEASE NOTE
 ##### This is probably the worst unfinished implementation you will ever see
 
-##### Noops is and always will be a general purpose programming language without operators ({, }, +, -, etc). I'm not starting out with a detailed specification. I want the Noops community to turn Noops it into whatever the majority wants it to be. So, grab some coffee, turn on some music, and don't be a stranger.
+##### Noops is and always will be a general purpose programming language without symbols ({, }, +, -, etc). I'm not starting out with a detailed specification (although a vague one is coming soon). I want the Noops community to turn Noops it into whatever the majority wants it to be. So, grab some coffee, turn on some music, and don't be a stranger.
 
 ## Current Requirements
 Lua 5.* (Note: it should with 5.1, 5.2, and 5.3. If it doesn't, create an issue)
