@@ -81,14 +81,35 @@ for i,v in ipairs(code_by_newlines) do
     str = str .. ")"
     table.insert(execs, str)
   elseif line[1] == "var" then
-    -- local code = string.gsub(v, "var ", "")
-    -- code = string.gsub(code, "is", "=")
-    -- code = string.gsub(code, line[2], "_G['" .. line[2] .. "']")
-    -- table.insert(execs, code)
-    -- print(code)
-    _G[line[2]] = line[4]
+    local code = "_G['" .. line[2] .. "']="
+
+    for x, y in ipairs(line) do
+      if y ~= "var" and y ~= "is" and y ~= line[2] then
+        if y == "op" then
+          code = code .. "("
+        elseif y == "cp" then
+          code = code .. ")"
+        elseif y == "plus" then
+          code = code .. "+"
+        elseif y == "min" then
+          code = code .. "-"
+        elseif y == "mul" then
+          code = code .. "*"
+        elseif y == "div" then
+          code = code .. "/"
+        else
+          if _G[y] then
+            code = code .. _G[y]
+          else
+            code = code .. y
+          end
+        end
+      end
+    end
+    loadstring(code)()
   end
 end
 
 -- Time to run the code
+-- print(table.concat(execs, ";"))
 loadstring(table.concat(execs, ";"))()
