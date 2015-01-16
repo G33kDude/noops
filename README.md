@@ -30,4 +30,5 @@ lua noops.lua examples/hello_world.noops
 hello_world.noops
 variable_test.noops
 empty.noops
+maths.noops
 ```
