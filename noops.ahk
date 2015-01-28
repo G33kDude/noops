@@ -1,11 +1,13 @@
 #SingleInstance
+SetBatchLines, -1
+DllCall("AllocConsole")
 
-FileName = %1% ; Pull from command line parameter
+FilePath = %1% ; Pull from command line parameter
 
-if !FileName
-	FileSelectFile, FileName,,, Select a noops source file, Noops Source (*.noops)
+if !FilePath
+	FileSelectFile, FilePath,,, Select a noops source file, Noops Source (*.noops)
 
-FileRead, Script, %1%
+FileRead, Script, %FilePath%
 MyNoops := new noops(Script)
 MyNoops.Execute()
 MsgBox
@@ -16,7 +18,7 @@ class noops
 	, Print: -1, Add: 2, Sub: 2
 	, While: -1, Div: 2, Mul: 2
 	, Less: 2, Char: 1, Asc: 1
-	, Not: 1}
+	, Not: 1, Round: 1, Join: -1}
 	
 	__New(Script)
 	{
@@ -59,13 +61,13 @@ class noops
 		return Out
 	}
 	
-	Resolve(Word)
+	Resolve(Word, Separator=" ")
 	{
 		if IsObject(Word)
 		{
 			for each, Word in Word
-				Out .= " " this.Resolve(Word)
-			return SubStr(Out, 2)
+				Out .= Separator this.Resolve(Word)
+			return SubStr(Out, StrLen(Separator)+1)
 		}
 		return this.Variables.HasKey(Word) ? this.Variables[Word] : Word
 	}
@@ -79,8 +81,7 @@ class noops
 	
 	_Print(Text*)
 	{
-		Print(this.Resolve(Text), "")
-		;MsgBox, % this.Resolve(Text)
+		FileOpen("$CONOUT", "w").Write(this.Resolve(Text))
 	}
 	
 	_Add(Addend1, Addend2)
@@ -143,16 +144,19 @@ class noops
 	{
 		return !this.Resolve(Value)
 	}
+	
+	_Round(Value)
+	{
+		return Round(this.Resolve(Value))
+	}
+	
+	_Join(Values*)
+	{
+		return this.Resolve(Values, "")
+	}
 }
 
 IndentLevel(String)
 {
 	return RegExMatch(String, "^ *\K[^ ]")
-}
-
-Join(Array, String=" ")
-{
-	for Key, Value in Array
-		Out .= String Value
-	Return SubStr(Out, StrLen(String)+1)
 }
