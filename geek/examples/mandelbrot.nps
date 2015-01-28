@@ -1,0 +1,29 @@
+﻿var w is 100
+var h is 20
+var m is 20
+var step is div 1 20
+var star is char 42
+var space is char 32
+var lf is char 10
+var y is sub 0 1
+while less y 1
+    var y is add y step
+    var x is sub 0 div 25 10
+    while less x 1
+        var x is add x step
+        var i is 0
+        var a is 0
+        var b is 0
+        while mul less add mul a a mul b b 4 less i m
+            var t is add sub mul a a mul b b x
+            var b is add mul mul 2 a b y
+            var a is t
+            var i is add i 1
+        var t is 1
+        while mul t less i m
+            var t is sub t 1
+            print star
+        while t
+            var t is sub t 1
+            print space
+    print lf
