@@ -1,11 +1,11 @@
-#SingleInstance
+﻿#SingleInstance
 SetBatchLines, -1
 DllCall("AllocConsole")
 
 FilePath = %1% ; Pull from command line parameter
 
 if !FilePath
-	FileSelectFile, FilePath,,, Select a noops source file, Noops Source (*.noops)
+	FileSelectFile, FilePath,,, Select a noops source file, Noops Source (*.nps)
 
 FileRead, Script, %FilePath%
 MyNoops := new noops(Script)
@@ -81,7 +81,7 @@ class noops
 	
 	_Print(Text*)
 	{
-		FileOpen("$CONOUT", "w").Write(this.Resolve(Text))
+		FileOpen("CONOUT$", "w").Write(this.Resolve(Text))
 	}
 	
 	_Add(Addend1, Addend2)
